@@ -41,7 +41,7 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = '__all__'
                 
 class UserSerializer(serializers.ModelSerializer):   
-    groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())     
+    groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all(), required=False)     
     
     class Meta:
         model = User

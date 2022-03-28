@@ -22,6 +22,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from rest_framework import routers
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 router = routers.DefaultRouter()
 
@@ -32,7 +33,6 @@ router.register('api/employees', views.EmployeeViewSet, basename='employee')
 router.register('api/clients', views.ClientViewSet, basename='client')
 router.register('api/groups', views.GroupViewSet, basename='group')
 router.register('api/events', views.EventViewSet, basename='event')
-# router.register('api/users', views.UserViewSet, basename='user')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -42,6 +42,13 @@ urlpatterns = [
     
     path('api/users/', views.UserList.as_view(), name='users-list'),
     path('api/users/<int:pk>', views.UserDetail.as_view(), name='user-detail'),
+    path('api/admin/', views.CreateAdminUser.as_view(), name='admin-user'),
+    
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)

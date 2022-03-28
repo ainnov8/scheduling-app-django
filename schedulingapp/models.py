@@ -14,7 +14,7 @@ class Company(models.Model):
     postal_code = models.CharField(max_length=10)
     company_logo = models.ImageField(max_length=200, upload_to='images/')
     description = models.CharField(max_length=255)
-    website = models.URLField(max_length=200)
+    website = models.CharField(max_length=200)
     
     created_at = models.DateTimeField(auto_now_add=True)
     

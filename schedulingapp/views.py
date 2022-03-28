@@ -74,7 +74,18 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         instance = serializer.save()
         instance.set_password(instance.password)
         instance.save()
+        
+class CreateAdminUser(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.is_active = True
+        instance.is_staff = True
+        instance.save()
+    
 # groups 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
