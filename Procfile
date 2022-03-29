@@ -1,1 +1,1 @@
-web: gunicorn schedulingapp.wsgi
+web: gunicorn techleft.wsgi
