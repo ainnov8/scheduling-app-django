@@ -35,7 +35,7 @@ router.register('api/groups', views.GroupViewSet, basename='group')
 router.register('api/events', views.EventViewSet, basename='event')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
     
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -52,3 +52,5 @@ urlpatterns = [
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)
+
+urlpatterns += router.urls
