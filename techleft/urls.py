@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from unicodedata import name
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -35,31 +36,12 @@ router.register('groups', views.GroupViewSet, basename='group')
 router.register('events', views.EventViewSet, basename='event')
 
 urlpatterns = [
-    # path('', include(router.urls)),
-    # path('companies/', views.CompanyList.as_view(), name='company-list'),
-    # path('companies/', views.CompanyDetail.as_view(), name='company-detail'),
-    
-    # path('branches/', views.BranchList.as_view(), name='branch-list'),
-    # path('branches/', views.BranchDetail.as_view(), name='branch-detail'),
-    
-    # path('departments/', views.DepartmentList.as_view(), name='department-list'),
-    # path('departments/', views.DepartmentDetail.as_view(), name='department-detail'),
-    
-    # path('employees/', views.EmployeeList.as_view(), name='employee-list'),
-    # path('employees/', views.EmployeeDetail.as_view(), name='employee-detail'),
-    
-    # path('clients/', views.ClientList.as_view(), name='client-list'),
-    # path('clients/', views.ClientDetail.as_view(), name='client-detail'),
-    
-    # path('groups/', views.GroupList.as_view(), name='group-list'),
-    # path('groups/', views.GroupDetail.as_view(), name='group-detail'),
-    
-    # path('events/', views.EventList.as_view(), name='event-list'),
-    # path('events/', views.EventDetail.as_view(), name='event-detail'),
     
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
+    path('api/auth-user/', views.UserView.as_view(), name='auth-user'),
+
     path('users/', views.UserList.as_view(), name='users-list'),
     path('users/<int:pk>', views.UserDetail.as_view(), name='user-detail'),
     path('admin/', views.CreateAdminUser.as_view(), name='admin-user'),
