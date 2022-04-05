@@ -81,11 +81,10 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         instance.save()
         
 class UserView(APIView):
-    def get(self, request):
-        bearer = request.META.get('HTTP_AUTHORIZATION')
-        token = bearer[6:]
+    def post(self, request):
+        token = request.data['token']
         
-        if not bearer:
+        if not token:
            raise AuthenticationFailed('Unauthenticated!')
         
         try:
