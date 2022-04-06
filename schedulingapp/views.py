@@ -4,11 +4,22 @@ from schedulingapp.models import Company, Branch, Department, Employee, Client, 
 from schedulingapp.serializers import CompanySerializer, BranchSerializer, DepartmentSerializer, EmployeeSerializer, ClientSerializer, UserSerializer, EventSerializer, GroupSerializer
 from rest_framework import generics, permissions, viewsets
 from rest_framework.decorators import action
-from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.views import APIView
-from rest_framework.response import Response
-import jwt
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
     
 # Create your views here.
 class CompanyViewSet(viewsets.ModelViewSet):
@@ -79,23 +90,6 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         instance = serializer.save()
         instance.set_password(instance.password)
         instance.save()
-        
-class UserView(APIView):
-    def post(self, request):
-        token = request.data['token']
-        
-        if not token:
-           raise AuthenticationFailed('Unauthenticated!')
-        
-        try:
-            payload = jwt.decode(token, options={"verify_signature": False})
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated!')
-        
-        user = User.objects.filter(id = payload['user_id']).first()
-        serializer = UserSerializer(user)
-
-        return Response(serializer.data)
         
 class CreateAdminUser(generics.CreateAPIView):
     queryset = User.objects.all()
