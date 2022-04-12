@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from pathlib import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -150,7 +151,17 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://schedulingapp-django.herokuapp.com",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
+
+CORS_ALLOW_HEADERS = list(default_headers)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
