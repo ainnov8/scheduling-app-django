@@ -4,13 +4,14 @@ from django.contrib.auth.models import Group, User
 
 class CompanySerializer(serializers.ModelSerializer):
     company_logo = serializers.ImageField(max_length=None, allow_empty_file=False, use_url=True, required=False)
+    # users = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
     
     class Meta:
         model = Company
         fields = '__all__'
         
 class BranchSerializer(serializers.ModelSerializer):
-    company = serializers.PrimaryKeyRelatedField(source='company.name', read_only=True)
+    # company = serializers.PrimaryKeyRelatedField(source='company.name', read_only=True) 
     
     class Meta:
         model = Branch
@@ -42,6 +43,7 @@ class ClientSerializer(serializers.ModelSerializer):
                 
 class UserSerializer(serializers.ModelSerializer):   
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all(), required=False)     
+    # company = serializers.PrimaryKeyRelatedField(source='company.name', read_only=True)
     
     class Meta:
         model = User

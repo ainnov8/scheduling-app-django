@@ -1,20 +1,24 @@
 from django.db import models
+# from django.contrib.auth.models import User
 
 # Create your models here.     
 class Company(models.Model):
+    # users = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=150, unique=True)
-    date = models.DateField()
-    address = models.TextField()
-    province = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=20)
-    mobile_number = models.CharField(max_length=25)
-    contact_person = models.CharField(max_length=100)
-    postal_code = models.CharField(max_length=10)
-    company_logo = models.ImageField(max_length=200, upload_to='images/')
-    description = models.CharField(max_length=255)
-    website = models.CharField(max_length=200)
+    
+    email = models.EmailField(max_length=150, unique=True, null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    province = models.CharField(max_length=100, null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    mobile_number = models.CharField(max_length=25, null=True, blank=True)
+    contact_person = models.CharField(max_length=100, null=True, blank=True)
+    postal_code = models.CharField(max_length=10, null=True, blank=True)
+    company_logo = models.ImageField(max_length=200, upload_to='images/', null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
+    website = models.CharField(max_length=200, null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     
@@ -22,7 +26,7 @@ class Company(models.Model):
         return "%s %s" % (self.name, self.contact_person)
     
 class Branch(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    # company = models.ForeignKey(Company, on_delete=models.CASCADE)
     
     name = models.CharField(max_length=255)
     country = models.CharField(max_length=150)
@@ -84,6 +88,7 @@ class Event(models.Model):
     end_time = models.DateField()
     
     note = models.TextField(null=True, blank=True)
+    status = models.TextField(null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
         
