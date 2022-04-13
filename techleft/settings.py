@@ -139,15 +139,15 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True  
+# CORS_ALLOW_ALL_ORIGINS = True  
 
-# CORS_ORIGIN_WHITELIST = [
-#     "https://schedulingapp-django.herokuapp.com",
-#     "http://localhost:3000",
-#     "http://localhost:3001",
-#     "http://127.0.0.1:8000",
-#     "http://localhost:8000",
-# ]
+CORS_ORIGIN_WHITELIST = [
+    "https://schedulingapp-django.herokuapp.com",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
 
 CORS_ALLOW_HEADERS = [
     "accept",
