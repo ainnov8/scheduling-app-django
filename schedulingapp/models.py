@@ -1,8 +1,18 @@
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from tenants.models import TenantAwareModel
 
-# Create your models here.     
-class Company(models.Model):
+# Create your models here.  
+class User(AbstractUser):
+    username = models.CharField(max_length=150, unique=True)
+    email = models.CharField(max_length=200)
+    password = models.CharField(max_length=100)
+    
+    REQUIRED_FIELD = []
+    
+    fields = '__all__'
+       
+class Company(TenantAwareModel):
     # users = models.ForeignKey(User, on_delete=models.CASCADE)
     
     name = models.CharField(max_length=255)
@@ -25,7 +35,7 @@ class Company(models.Model):
     def __str__(self):
         return "%s %s" % (self.name, self.contact_person)
     
-class Branch(models.Model):
+class Branch(TenantAwareModel):
     # company = models.ForeignKey(Company, on_delete=models.CASCADE)
     
     name = models.CharField(max_length=255)
@@ -38,7 +48,7 @@ class Branch(models.Model):
     def __str__(self):
         return self.name
     
-class Department(models.Model):
+class Department(TenantAwareModel):
     name = models.CharField(max_length=255)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,7 +56,7 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
-class Employee(models.Model):
+class Employee(TenantAwareModel):
     name = models.CharField(max_length=128)
     email = models.EmailField(max_length=254, unique=True)
     mobile = models.CharField(max_length=30)
@@ -66,7 +76,7 @@ class Employee(models.Model):
     def __str__(self):
         return "%s %s" % (self.name, self.branch)
     
-class Client(models.Model):
+class Client(TenantAwareModel):
     name = models.CharField(max_length=128)
     country = models.CharField(max_length=150)
     province = models.CharField(max_length=100)
@@ -80,7 +90,7 @@ class Client(models.Model):
     def __str__(self):
         return "%s %s" % (self.name, self.employee)
     
-class Event(models.Model):
+class Event(TenantAwareModel):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     
     name = models.CharField(max_length=128)

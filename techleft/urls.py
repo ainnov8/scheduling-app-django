@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from schedulingapp import views
+from tenants.views import CreateTenant
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
@@ -36,6 +37,7 @@ router.register('groups', views.GroupViewSet, basename='group')
 router.register('events', views.EventViewSet, basename='event')
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     
     path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -43,7 +45,9 @@ urlpatterns = [
 
     path('users/', views.UserList.as_view(), name='users-list'),
     path('users/<int:pk>', views.UserDetail.as_view(), name='user-detail'),
-    path('admin/', views.CreateAdminUser.as_view(), name='admin-user'),
+    path('admin-user/', views.CreateAdminUser.as_view(), name='admin-user'),
+    
+    path('tenants/', CreateTenant.as_view(), name='create-tenant'),
     
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
 

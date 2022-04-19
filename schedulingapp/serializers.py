@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from schedulingapp.models import Branch, Company, Department, Employee, Client, Event
-from django.contrib.auth.models import Group, User
+from schedulingapp.models import Branch, Company, Department, Employee, Client, Event, User
+from django.contrib.auth.models import Group
 
 class CompanySerializer(serializers.ModelSerializer):
     company_logo = serializers.ImageField(max_length=None, allow_empty_file=False, use_url=True, required=False)
