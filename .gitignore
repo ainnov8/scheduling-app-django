@@ -29,3 +29,9 @@ nosetests.xml
 coverage.xml 
 *.cover 
 .hypothesis/ 
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+eb-virt/
